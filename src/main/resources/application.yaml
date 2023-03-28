@@ -5,10 +5,22 @@ spring:
     password: postgres
 
   jpa:
+    show-sql: true
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         jdbc.lob.non_contextual_creation: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: com.example.hibernate6teststand.dialect.BetterPGDialect
+        format_sql: true
+    #        dialect: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          query:
+            sqm:
+              ast:  debug
