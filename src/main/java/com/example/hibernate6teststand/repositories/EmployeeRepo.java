@@ -9,9 +9,9 @@ import java.util.UUID;
 
 @Repository
 public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
-    @Query("SELECT max(e.id) FROM Employee e")
-    UUID getS();
+    @Query("SELECT max(e.id) FROM Employee e where e.salary > 100")
+    UUID getMaxUUID();
 
-    @Query("SELECT secondmaxsalary()")
-    String getM();
+    @Query("SELECT secondMaxSalary()")
+    Long getMaxSalary();
 }

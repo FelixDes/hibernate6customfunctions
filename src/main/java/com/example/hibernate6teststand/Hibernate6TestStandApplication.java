@@ -18,7 +18,7 @@ public class Hibernate6TestStandApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//        System.out.println(er.getS());
-        System.out.println(er.getM());
+//        System.out.println(er.getMaxUUID());
+        System.out.println(er.getMaxSalary());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hibernate6teststand.fuctions;
 
+import com.example.hibernate6teststand.entities.Employee;
 import org.hibernate.query.sqm.function.AbstractSqmSelfRenderingFunctionDescriptor;
 import org.hibernate.query.sqm.produce.function.ArgumentTypesValidator;
 import org.hibernate.query.sqm.produce.function.StandardArgumentsValidators;
@@ -15,16 +16,20 @@ import org.hibernate.type.spi.TypeConfiguration;
 import java.util.Collections;
 import java.util.List;
 
-public class SecondMaxSalarySqmFunction extends AbstractSqmSelfRenderingFunctionDescriptor {
-    public SecondMaxSalarySqmFunction(
+public class SecondMaxSqmFunction extends AbstractSqmSelfRenderingFunctionDescriptor {
+    private TypeConfiguration typeConfiguration;
+
+    public SecondMaxSqmFunction(
+            String name,
             TypeConfiguration typeConfiguration
     ) {
         super(
-                "secondmaxsalary",
+                name,
                 new ArgumentTypesValidator(StandardArgumentsValidators.exactly(0)),
-                StandardFunctionReturnTypeResolvers.invariant(typeConfiguration.getBasicTypeRegistry().resolve(StandardBasicTypes.INTEGER)),
+                StandardFunctionReturnTypeResolvers.invariant(typeConfiguration.getBasicTypeRegistry().resolve(StandardBasicTypes.BIG_INTEGER)),
                 null
         );
+        this.typeConfiguration = typeConfiguration;
     }
 
     @Override
@@ -51,8 +56,8 @@ public class SecondMaxSalarySqmFunction extends AbstractSqmSelfRenderingFunction
             Predicate filter,
             List<SortSpecification> withinGroup,
             SqlAstTranslator<?> translator) {
-        sqlAppender.appendSql(1233);
-//        sqlAppender.appendSql('(');
-//        select max(salary) from Employee where salary <> (select max(salary) from Employee)
+//        String e = typeConfiguration.getJavaTypeRegistry().resolveEntityTypeDescriptor(Employee.class).getRecommendedJdbcType(typeConfiguration.getCurrentBaseSqlTypeIndicators()).getFriendlyName();
+
+        sqlAppender.appendSql("max(salary) from Employee where salary <> (select max(salary) from Employee)");
     }
 }
