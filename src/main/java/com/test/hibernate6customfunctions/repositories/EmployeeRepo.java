@@ -30,6 +30,7 @@ public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
     Long countEmployeeWithSalaryGreaterValQuery(@Param("edge") double edge);
     // ----------------------------------
 
+
     // Number of employees with salary greater than parameter
     @Query("select countItemsGreaterVal(salary, :#{#bottomEdge}) filter (WHERE salary <:#{#topEdge}) from Employee")
     Long countEmployeeWithSalaryBetweenValAndFilterCustom(@Param("bottomEdge") double bottomEdge, @Param("topEdge") double topEdge);

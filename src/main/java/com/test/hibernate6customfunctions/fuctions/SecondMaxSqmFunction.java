@@ -42,6 +42,7 @@ public class SecondMaxSqmFunction extends AbstractSqmSelfRenderingFunctionDescri
             List<? extends SqlAstNode> sqlAstArguments,
             Predicate filter,
             SqlAstTranslator<?> translator) {
+        // Appending function name and its parenthesis to result SQL query
         sqlAppender.appendSql(getName());
         sqlAppender.appendSql("()");
     }

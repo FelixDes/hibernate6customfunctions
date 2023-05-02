@@ -11,6 +11,7 @@ spring:
     properties:
       hibernate:
         jdbc.lob.non_contextual_creation: true
+        # Setting custom SQL dialect
         dialect: com.test.hibernate6customfunctions.dialect.BetterPGDialect
         #dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
@@ -18,4 +19,5 @@ spring:
 
 logging:
   level:
+    # This line enables detailed logging of the Hibernate SQM queries
     org.hibernate.orm.query.sqm.ast: debug
