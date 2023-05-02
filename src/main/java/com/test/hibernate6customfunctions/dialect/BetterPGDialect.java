@@ -1,6 +1,7 @@
-package com.example.hibernate6teststand.dialect;
+package com.test.hibernate6customfunctions.dialect;
 
-import com.example.hibernate6teststand.fuctions.SecondMaxSqmFunction;
+import com.test.hibernate6customfunctions.fuctions.CountItemsGreaterValFunction;
+import com.test.hibernate6customfunctions.fuctions.SecondMaxSqmFunction;
 import org.hibernate.dialect.DatabaseVersion;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.dialect.PostgreSQLDriverKind;
@@ -27,8 +28,8 @@ public class BetterPGDialect extends PostgreSQLDialect {
     @Override
     public void initializeFunctionRegistry(QueryEngine queryEngine) {
         super.initializeFunctionRegistry(queryEngine);
-//        var a = queryEngine.getTypeConfiguration().getSessionFactory().getMappingMetamodel().getEntityDescriptor(Employee.class)
 
         queryEngine.getSqmFunctionRegistry().register("secondMaxSalary", new SecondMaxSqmFunction("secondMaxSalary", queryEngine.getTypeConfiguration()));
+        queryEngine.getSqmFunctionRegistry().register("countItemsGreaterVal", new CountItemsGreaterValFunction("countItemsGreaterVal", this,  queryEngine.getTypeConfiguration()));
     }
 }
