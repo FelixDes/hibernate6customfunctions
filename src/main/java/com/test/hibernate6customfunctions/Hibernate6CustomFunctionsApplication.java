@@ -18,7 +18,9 @@ public class Hibernate6CustomFunctionsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println(er.countEmployeeWithSalaryGreaterValAndLessThanFilter(35.9, 300));
-//        System.out.println(er.numberOfEmployeesSalaryGreaterThan200());
+//        System.out.println(er.countEmployeeWithSalaryBetweenValAndFilterCustom(35.9, 300));
+//        System.out.println(er.countEmployeeWithSalaryBetweenValAndFilterQuery(35.9, 300));
+        System.out.println(er.getSecondMaxSalaryCustom());
+        System.out.println(er.getSecondMaxSalaryQuery());
     }
 }

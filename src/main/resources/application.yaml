@@ -11,16 +11,11 @@ spring:
     properties:
       hibernate:
         jdbc.lob.non_contextual_creation: true
-    #        dialect: org.hibernate.dialect.PostgreSQLDialect
         dialect: com.test.hibernate6customfunctions.dialect.BetterPGDialect
+        #dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     generate-ddl: true
 
 logging:
   level:
-    org:
-      hibernate:
-        orm:
-          query:
-            sqm:
-              ast:  debug
+    org.hibernate.orm.query.sqm.ast: debug
