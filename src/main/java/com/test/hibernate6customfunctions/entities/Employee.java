@@ -1,4 +1,4 @@
-package com.example.hibernate6teststand.entities;
+package com.test.hibernate6customfunctions.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
