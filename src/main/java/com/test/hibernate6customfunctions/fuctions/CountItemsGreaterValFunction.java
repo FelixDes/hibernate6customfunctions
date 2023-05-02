@@ -28,9 +28,20 @@ public class CountItemsGreaterValFunction extends AbstractSqmSelfRenderingFuncti
     private final BasicType<BigDecimal> bigDecimalType;
 
     public CountItemsGreaterValFunction(String name, Dialect dialect, TypeConfiguration typeConfiguration) {
-        super(name, FunctionKind.AGGREGATE, new ArgumentTypesValidator(StandardArgumentsValidators.exactly(2), FunctionParameterType.NUMERIC, FunctionParameterType.NUMERIC), StandardFunctionReturnTypeResolvers.invariant(typeConfiguration.getBasicTypeRegistry().resolve(StandardBasicTypes.DOUBLE)), StandardFunctionArgumentTypeResolvers.invariant(typeConfiguration, NUMERIC, NUMERIC));
-        bigDecimalType = typeConfiguration.getBasicTypeRegistry().resolve(StandardBasicTypes.BIG_DECIMAL);
+        super(
+                name,
+                // Aggregate function
+                FunctionKind.AGGREGATE,
+                // Setting argument validation: 2 numeric args
+                new ArgumentTypesValidator(StandardArgumentsValidators.exactly(2), FunctionParameterType.NUMERIC, FunctionParameterType.NUMERIC),
+                // Setting return type: bigint (mapped for BigInteger)
+                StandardFunctionReturnTypeResolvers.invariant(typeConfiguration.getBasicTypeRegistry().resolve(StandardBasicTypes.BIG_INTEGER)),
+                // Setting argument types: 2 numeric args
+                StandardFunctionArgumentTypeResolvers.invariant(typeConfiguration, NUMERIC, NUMERIC)
+        );
+        // Extracting cast function for casting input arguments to correct type
         castFunction = new CastFunction(dialect, dialect.getPreferredSqlTypeCodeForBoolean());
+        bigDecimalType = typeConfiguration.getBasicTypeRegistry().resolve(StandardBasicTypes.BIG_DECIMAL);
     }
 
     @Override
@@ -40,14 +51,16 @@ public class CountItemsGreaterValFunction extends AbstractSqmSelfRenderingFuncti
 
     @Override
     public void render(SqlAppender sqlAppender, List<? extends SqlAstNode> sqlAstArguments, Predicate filter, SqlAstTranslator<?> translator) {
-        final boolean caseWrapper = filter != null && !translator.supportsFilterClause();
-
+        // Appending name of SQL function to result query
         sqlAppender.appendSql(getName());
         sqlAppender.appendSql('(');
 
+        // Taking 2 arguments
         final Expression first_arg = (Expression) sqlAstArguments.get(0);
         final Expression second_arg = (Expression) sqlAstArguments.get(1);
 
+        //
+        final boolean caseWrapper = filter != null && !translator.supportsFilterClause();
         if (caseWrapper) {
             translator.getCurrentClauseStack().push(Clause.WHERE);
             sqlAppender.appendSql("case when ");
@@ -72,6 +85,7 @@ public class CountItemsGreaterValFunction extends AbstractSqmSelfRenderingFuncti
     }
 
     private void renderArgument(SqlAppender sqlAppender, SqlAstTranslator<?> translator, Expression arg) {
+        // Extracting the type of argument
         final JdbcMapping sourceMapping = arg.getExpressionType().getJdbcMappings().get(0);
         if (sourceMapping.getJdbcType().isNumber()) {
             castFunction.render(sqlAppender, Arrays.asList(arg, new CastTarget(bigDecimalType)), translator);

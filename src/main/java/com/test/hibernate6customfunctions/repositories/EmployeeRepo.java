@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Repository
@@ -15,10 +16,10 @@ public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
 
     // Second max salary ----------------
     @Query("select secondMaxSalary()")
-    Long getSecondMaxSalaryCustom();
+    BigDecimal getSecondMaxSalaryCustom();
 
     @Query("select max(salary) from Employee where salary <> (select max(salary) from Employee)")
-    Long getSecondMaxSalaryQuery();
+    BigDecimal getSecondMaxSalaryQuery();
     // ----------------------------------
 
 

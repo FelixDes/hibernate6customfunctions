@@ -9,7 +9,7 @@ insert into Employee (id, name, salary, surname) values (gen_random_uuid(), 'Ber
 insert into Employee (id, name, salary, surname) values (gen_random_uuid(), 'Gavin', 500, 'Houle');
 
 -- Function that returns second max salary of Employee table
-create or replace function secondMaxSalary() returns bigint as $$ select max(salary) from Employee where salary <> (select max(salary) from Employee) $$ language SQL;
+create or replace function secondMaxSalary() returns numeric as $$ select max(salary) from Employee where salary <> (select max(salary) from Employee) $$ language SQL;
 
 -- Aggregate function that returns number of rows greater than 200
 create or replace function greater_than(c bigint, val numeric, gr_val numeric) returns bigint as $$ begin return case when val > gr_val then (c + 1)::bigint else c::bigint end; end; $$ language "plpgsql";
