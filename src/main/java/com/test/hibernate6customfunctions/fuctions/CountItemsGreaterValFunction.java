@@ -55,7 +55,7 @@ public class CountItemsGreaterValFunction extends AbstractSqmSelfRenderingFuncti
         sqlAppender.appendSql(getName());
         sqlAppender.appendSql('(');
 
-        // Taking 2 arguments
+        // Extracting 2 arguments
         final Expression first_arg = (Expression) sqlAstArguments.get(0);
         final Expression second_arg = (Expression) sqlAstArguments.get(1);
 

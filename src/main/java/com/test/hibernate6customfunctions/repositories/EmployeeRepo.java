@@ -27,7 +27,9 @@ public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
     @Query("select countItemsGreaterVal(salary, :#{#edge}) from Employee")
     Long countEmployeeWithSalaryGreaterValCustom(@Param("edge") double edge);
 
-    @Query("select count(*) filter (where salary > cast(:#{#edge} as bigdecimal)) from Employee")
+    @Query("select count(*) " +
+            "filter (where salary > cast(:#{#edge} as bigdecimal)) " +
+            "from Employee")
     Long countEmployeeWithSalaryGreaterValQuery(@Param("edge") double edge);
     // ----------------------------------
 
@@ -36,7 +38,10 @@ public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
     @Query("select countItemsGreaterVal(salary, :#{#bottomEdge}) filter (WHERE salary <:#{#topEdge}) from Employee")
     Long countEmployeeWithSalaryBetweenValAndFilterCustom(@Param("bottomEdge") double bottomEdge, @Param("topEdge") double topEdge);
 
-    @Query("select count(*) from Employee WHERE salary > cast(:#{#bottomEdge} as bigdecimal) and salary < cast(:#{#topEdge} as bigdecimal)")
+    @Query("select " +
+            "count(*) " +
+            "from Employee " +
+            "WHERE salary > cast(:#{#bottomEdge} as bigdecimal) and salary < cast(:#{#topEdge} as bigdecimal)")
     Long countEmployeeWithSalaryBetweenValAndFilterQuery(@Param("bottomEdge") double bottomEdge, @Param("topEdge") double topEdge);
 
     // ----------------------------------
