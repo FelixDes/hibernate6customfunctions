@@ -1,4 +1,5 @@
 spring:
+  # This datasource set for manual start up with docker-compose file in ./db
   datasource:
     url: jdbc:postgresql://localhost:5555/postgres
     username: postgres
@@ -9,11 +10,11 @@ spring:
     hibernate:
       ddl-auto: create
     properties.hibernate:
-        jdbc.lob.non_contextual_creation: true
-        # Setting custom SQL dialect
-        dialect: com.test.hibernate6customfunctions.dialect.BetterPGDialect
-        #dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+      jdbc.lob.non_contextual_creation: true
+      # Setting custom SQL dialect
+      dialect: com.test.hibernate6customfunctions.dialect.BetterPGDialect
+      #dialect: org.hibernate.dialect.PostgreSQLDialect
+      format_sql: true
     generate-ddl: true
 
 logging:
