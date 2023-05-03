@@ -33,10 +33,11 @@ public class BetterPGDialect extends PostgreSQLDialect {
          QueryEngine contains SqmFunctionRegistry - the default storage of SQM functions.
 
          In the following lines we're registering custom SQM functions: SecondMaxSqmFunction and CountItemsGreaterValFunction.
-
          These functions can now be used in HQL or JPQL queries that are executed against a database using the BetterPGDialect dialect.
+
+         Note: "secondMaxSalary" - name that can be used in JPQL queries. "second_max_salary" - name of function in the database
          */
-        queryEngine.getSqmFunctionRegistry().register("secondMaxSalary", new SecondMaxSqmFunction("secondMaxSalary", queryEngine.getTypeConfiguration()));
+        queryEngine.getSqmFunctionRegistry().register("secondMaxSalary", new SecondMaxSqmFunction("second_max_salary", queryEngine.getTypeConfiguration()));
         queryEngine.getSqmFunctionRegistry().register("countItemsGreaterVal", new CountItemsGreaterValFunction("countItemsGreaterVal", this, queryEngine.getTypeConfiguration()));
     }
 }

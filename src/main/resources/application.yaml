@@ -8,8 +8,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
-    properties:
-      hibernate:
+    properties.hibernate:
         jdbc.lob.non_contextual_creation: true
         # Setting custom SQL dialect
         dialect: com.test.hibernate6customfunctions.dialect.BetterPGDialect
