@@ -59,13 +59,16 @@ public class CountItemsGreaterValFunction extends AbstractSqmSelfRenderingFuncti
         final Expression first_arg = (Expression) sqlAstArguments.get(0);
         final Expression second_arg = (Expression) sqlAstArguments.get(1);
 
-        //
+        // If JPQL contains "filter" expression, but database doesn't support it
+        // then appends: function_name(case when (filter_expr) then (argument) else null end)
         final boolean caseWrapper = filter != null && !translator.supportsFilterClause();
         if (caseWrapper) {
             translator.getCurrentClauseStack().push(Clause.WHERE);
             sqlAppender.appendSql("case when ");
+
             filter.accept(translator);
             translator.getCurrentClauseStack().pop();
+
             sqlAppender.appendSql(" then ");
             renderArgument(sqlAppender, translator, first_arg);
             sqlAppender.appendSql(" else null end)");
@@ -77,6 +80,7 @@ public class CountItemsGreaterValFunction extends AbstractSqmSelfRenderingFuncti
             if (filter != null) {
                 translator.getCurrentClauseStack().push(Clause.WHERE);
                 sqlAppender.appendSql(" filter (where ");
+
                 filter.accept(translator);
                 sqlAppender.appendSql(')');
                 translator.getCurrentClauseStack().pop();
