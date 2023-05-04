@@ -25,8 +25,8 @@ public class SecondMaxSqmFunction extends AbstractSqmSelfRenderingFunctionDescri
         super(
                 name,
                 FunctionKind.NORMAL,
-                // Setting argument validation. In this case we have no input args
-                new ArgumentTypesValidator(StandardArgumentsValidators.exactly(0)),
+                // Setting argument validation. In this case we have no args
+                StandardArgumentsValidators.NO_ARGS,
                 // Setting return type: numeric (mapped for BigDecimal)
                 StandardFunctionReturnTypeResolvers.invariant(typeConfiguration.getBasicTypeRegistry()
                         .resolve(StandardBasicTypes.BIG_DECIMAL)),

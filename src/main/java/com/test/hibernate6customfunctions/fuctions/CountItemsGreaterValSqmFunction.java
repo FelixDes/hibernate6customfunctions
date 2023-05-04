@@ -23,11 +23,11 @@ import java.util.List;
 
 import static org.hibernate.query.sqm.produce.function.FunctionParameterType.NUMERIC;
 
-public class CountItemsGreaterValFunction extends AbstractSqmSelfRenderingFunctionDescriptor {
+public class CountItemsGreaterValSqmFunction extends AbstractSqmSelfRenderingFunctionDescriptor {
     private final CastFunction castFunction;
     private final BasicType<BigDecimal> bigDecimalType;
 
-    public CountItemsGreaterValFunction(String name, Dialect dialect, TypeConfiguration typeConfiguration) {
+    public CountItemsGreaterValSqmFunction(String name, Dialect dialect, TypeConfiguration typeConfiguration) {
         super(
                 name,
                 // Aggregate function

@@ -79,7 +79,7 @@ This project provides several examples of how to implement custom SQM functions 
         ```
        *Note*: for implementing aggregate functions you can
        visit
-       *[CountItemsGreaterValFunction.java](src/main/java/com/test/hibernate6customfunctions/fuctions/CountItemsGreaterValFunction.java)*
+       *[CountItemsGreaterValSqmFunction.java](src/main/java/com/test/hibernate6customfunctions/fuctions/CountItemsGreaterValSqmFunction.java)*
 4. Register your function to sqm function registry
     ```java
     public class BetterPGDialect extends PostgreSQLDialect {
