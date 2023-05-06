@@ -35,7 +35,9 @@ public class BetterPGDialect extends PostgreSQLDialect {
          In the following lines we're registering custom SQM functions.
          These functions can now be used in HQL or JPQL queries that are executed against a database using the BetterPGDialect dialect.
 
-         Note: "secondMaxSalary" - name that can be used in JPQL queries. "second_max_salary" - name of function in the database
+         Note:
+         "secondMaxSalary" - name that can be used in queries.
+         "second_max_salary" - name of function in the database.
          */
         // "Normal" function
         functionContributions.getFunctionRegistry().register("secondMaxSalary", new SecondMaxSqmFunction("second_max_salary", functionContributions.getTypeConfiguration()));
