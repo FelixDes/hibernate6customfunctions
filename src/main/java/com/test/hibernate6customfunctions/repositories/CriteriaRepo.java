@@ -11,9 +11,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.hibernate.query.criteria.JpaPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class CriteriaRepo {
     EntityManager entityManager;
     HibernateCriteriaBuilder criteriaBuilder;

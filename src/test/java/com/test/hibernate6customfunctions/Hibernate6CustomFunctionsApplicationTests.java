@@ -41,8 +41,9 @@ class Hibernate6CustomFunctionsApplicationTests {
     // Tests
     @Test
     void runNormalCustomFunction() {
-        var secondMaxFrom_Custom = employeeRepo.getSecondMaxSalaryCustom();
         var secondMaxFrom_Query = employeeRepo.getSecondMaxSalaryQuery();
+
+        var secondMaxFrom_Custom = employeeRepo.getSecondMaxSalaryCustom();
         var secondMaxFrom_Criteria = criteriaRepo.getSecondMaxSalary();
 
         Assertions.assertEquals(secondMaxFrom_Custom, secondMaxFrom_Query);
@@ -51,8 +52,9 @@ class Hibernate6CustomFunctionsApplicationTests {
 
     @Test
     void runAggregateCustomFunction() {
-        var employeesWithSalaryGreater_Custom = employeeRepo.countEmployeeSalaryGreaterCustom(350);
         var employeesWithSalaryGreater_Query = employeeRepo.countEmployeeSalaryGreaterQuery(350);
+
+        var employeesWithSalaryGreater_Custom = employeeRepo.countEmployeeSalaryGreaterCustom(350);
         var employeesWithSalaryGreater_Criteria = criteriaRepo.employeesWithSalaryGreater(350);
 
         Assertions.assertEquals(employeesWithSalaryGreater_Custom, employeesWithSalaryGreater_Query);
@@ -61,19 +63,15 @@ class Hibernate6CustomFunctionsApplicationTests {
 
     @Test
     void runAggregateCustomFunctionWithFilter() {
-        var countOfSalaryBetweenParams_Custom = employeeRepo.countEmployeeSalaryBetweenCustom(300, 400);
         var countOfSalaryBetweenParams_Query = employeeRepo.countEmployeeSalaryBetweenQuery(300, 400);
+
+        var countOfSalaryBetweenParams_Custom = employeeRepo.countEmployeeSalaryBetweenCustom(300, 400);
         var countOfSalaryBetweenParams_Criteria = criteriaRepo.countEmployeeSalaryBetween(300, 400);
 
         Assertions.assertEquals(countOfSalaryBetweenParams_Custom, countOfSalaryBetweenParams_Query);
         Assertions.assertEquals(countOfSalaryBetweenParams_Criteria, countOfSalaryBetweenParams_Query);
     }
     // ----------------------------------
-
-
-    public Long countEmployeeSalaryBetweenCriteria() {
-        return 0L;
-    }
 
     @AfterAll
     public static void afterAll() {

@@ -11,7 +11,7 @@ This project provides several examples of how to implement custom SQM functions 
    *Note*: database runs in docker container provided by Testcontainers
 2. Explore
 
-## Explanation of implementing custom functions
+## Guide for implementing custom functions
 
 1. Firstly, create your own SQL Dialect:
     ```java
@@ -88,11 +88,11 @@ This project provides several examples of how to implement custom SQM functions 
         public void initializeFunctionRegistry(FunctionContributions functionContributions) {
             super.initializeFunctionRegistry(functionContributions);
             
-            queryEngine.getSqmFunctionRegistry().register(
-                    "secondMaxSalary", // Name that can be used in JPQL queries
+            functionContributions.getSqmFunctionRegistry().register(
+                    "secondMaxSalary", // Name that can be used in queries 
                     new SecondMaxSqmFunction(
                         "second_max_salary", // Name of the function in the database
-                        queryEngine.getTypeConfiguration())
+                        functionContributions.getTypeConfiguration())
             );
          }
     }
@@ -109,16 +109,41 @@ This project provides several examples of how to implement custom SQM functions 
         }
     }
     ```
-5. Finally, use your function.  
-   Example: JPQL query in JpaRepository
-   ```java
-   @Repository
-   public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
-	   @Query("select secondMaxSalary()")
-	   BigDecimal getSecondMaxSalaryCustom();
-   }
-   ```
-
+5.  Finally, use your custom function:  
+    * *Example*: JPQL query in JpaRepository
+    ```java
+    @Repository
+    public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
+        @Query("select secondMaxSalary()")
+        BigDecimal getSecondMaxSalaryCustom();
+    }
+    ```
+    * *Example*: Criteria API
+    ```java
+    @Repository
+    public class CriteriaRepo {
+        EntityManager entityManager;
+        // You can access HibernateCriteriaBuilder by calling 
+        // entityManagerFactory.unwrap(SessionFactory.class);
+        HibernateCriteriaBuilder criteriaBuilder;
+    
+        @Autowired
+        CriteriaRepo(EntityManagerFactory entityManagerFactory,
+                     EntityManager entityManager) {
+            this.entityManager = entityManager;
+            SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
+            this.criteriaBuilder = sessionFactory.getCriteriaBuilder();
+        }
+        
+        public Double getSecondMaxSalary() {
+            CriteriaQuery<Double> query = criteriaBuilder.createQuery(Double.class);
+    
+            query.select(criteriaBuilder.function("secondMaxSalary", Double.class, null));
+            TypedQuery<Double> typedQuery = entityManager.createQuery(query);
+            return typedQuery.getSingleResult();
+        }
+    }
+    ```
 ## License
 
 > This project is distributed under the **MIT** license.
