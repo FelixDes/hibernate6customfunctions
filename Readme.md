@@ -44,10 +44,10 @@ This project provides several examples of how to implement custom SQM functions 
                    // Function type
                    FunctionKind.NORMAL,
                    // Setting argument validation. In this case we have no input args
-                   new ArgumentTypesValidator(StandardArgumentsValidators.exactly(0)),
-                   // Setting return type: numeric (mapped for BigDecimal)
+                   new ArgumentTypesValidator(StandardArgumentsValidators.NO_ARGS),
+                   // Setting return type: numeric (mapped for Double)
                    StandardFunctionReturnTypeResolvers.invariant(typeConfiguration.getBasicTypeRegistry()
-                       .resolve(StandardBasicTypes.BIG_DECIMAL)),
+                       .resolve(StandardBasicTypes.DOUBLE)),
                    // No arguments, so argument type resolver is null 
                    null
                );
