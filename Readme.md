@@ -2,7 +2,7 @@
 
 ## Description
 
-This project provides several examples of how to implement custom SQM functions in Hibernate 6.
+This project provides several examples of how to implement custom SQM functions in Hibernate 6.2.
 
 ## Start Up
 
@@ -85,8 +85,8 @@ This project provides several examples of how to implement custom SQM functions 
     public class BetterPGDialect extends PostgreSQLDialect {
         // Default constructors...
         @Override
-        public void initializeFunctionRegistry(QueryEngine queryEngine) {
-            super.initializeFunctionRegistry(queryEngine);
+        public void initializeFunctionRegistry(FunctionContributions functionContributions) {
+            super.initializeFunctionRegistry(functionContributions);
             
             queryEngine.getSqmFunctionRegistry().register(
                     "secondMaxSalary", // Name that can be used in JPQL queries
@@ -95,6 +95,18 @@ This project provides several examples of how to implement custom SQM functions 
                         queryEngine.getTypeConfiguration())
             );
          }
+    }
+    ```
+    *Note*: for Hibernate 6.1 it is:
+    ```java
+    public class BetterPGDialect extends PostgreSQLDialect {
+        // Default constructors...
+        @Override
+        public void initializeFunctionRegistry(QueryEngine queryEngine) {
+            super.initializeFunctionRegistry(queryEngine);
+
+            queryEngine.getSqmFunctionRegistry().register(/*...*/);
+        }
     }
     ```
 5. Finally, use your function.  

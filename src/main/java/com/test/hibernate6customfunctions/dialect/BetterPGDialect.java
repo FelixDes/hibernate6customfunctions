@@ -1,6 +1,7 @@
 package com.test.hibernate6customfunctions.dialect;
 
 import com.test.hibernate6customfunctions.fuctions.*;
+import org.hibernate.boot.model.FunctionContributions;
 import org.hibernate.dialect.DatabaseVersion;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.dialect.PostgreSQLDriverKind;
@@ -25,11 +26,11 @@ public class BetterPGDialect extends PostgreSQLDialect {
     }
 
     @Override
-    public void initializeFunctionRegistry(QueryEngine queryEngine) {
-        super.initializeFunctionRegistry(queryEngine);
+    public void initializeFunctionRegistry(FunctionContributions functionContributions) {
+        super.initializeFunctionRegistry(functionContributions);
 
         /*
-         QueryEngine contains SqmFunctionRegistry - the default storage of SQM functions.
+         FunctionContributions contains SqmFunctionRegistry - the default storage of SQM functions.
 
          In the following lines we're registering custom SQM functions.
          These functions can now be used in HQL or JPQL queries that are executed against a database using the BetterPGDialect dialect.
@@ -37,8 +38,8 @@ public class BetterPGDialect extends PostgreSQLDialect {
          Note: "secondMaxSalary" - name that can be used in JPQL queries. "second_max_salary" - name of function in the database
          */
         // "Normal" function
-        queryEngine.getSqmFunctionRegistry().register("secondMaxSalary", new SecondMaxSqmFunction("second_max_salary", queryEngine.getTypeConfiguration()));
+        functionContributions.getFunctionRegistry().register("secondMaxSalary", new SecondMaxSqmFunction("second_max_salary", functionContributions.getTypeConfiguration()));
         // Aggregate function
-        queryEngine.getSqmFunctionRegistry().register("countItemsGreaterVal", new CountItemsGreaterValSqmFunction("countItemsGreaterVal", this, queryEngine.getTypeConfiguration()));;
+        functionContributions.getFunctionRegistry().register("countItemsGreaterVal", new CountItemsGreaterValSqmFunction("countItemsGreaterVal", this, functionContributions.getTypeConfiguration()));
     }
 }
