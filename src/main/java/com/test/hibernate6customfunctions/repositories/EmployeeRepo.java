@@ -20,24 +20,24 @@ public interface EmployeeRepo extends JpaRepository<Employee, UUID> {
 
 
     // Number of employees with salary greater than parameter using custom aggregate function
-    @Query("select countItemsGreaterVal(salary, :#{#edge}) from Employee")
-    Long countEmployeeSalaryGreaterCustom(@Param("edge") double edge);
+    @Query("select countItemsGreaterVal(salary, :edge) from Employee")
+    Long countEmployeeSalaryGreaterCustom(double edge);
 
     @Query("select count(*) " +
-            "filter (where salary > cast(:#{#edge} as bigdecimal)) " +
+            "filter (where salary > cast(:edge as bigdecimal)) " +
             "from Employee")
-    Long countEmployeeSalaryGreaterQuery(@Param("edge") double edge);
+    Long countEmployeeSalaryGreaterQuery(double edge);
     // ----------------------------------
 
 
     // Number of employees with salary greater than parameter
-    @Query("select countItemsGreaterVal(salary, :#{#bottomEdge}) filter (WHERE salary <:#{#topEdge}) from Employee")
-    Long countEmployeeSalaryBetweenCustom(@Param("bottomEdge") double bottomEdge, @Param("topEdge") double topEdge);
+    @Query("select countItemsGreaterVal(salary, :bottomEdge) filter (WHERE salary < :topEdge) from Employee")
+    Long countEmployeeSalaryBetweenCustom(double bottomEdge, double topEdge);
 
     @Query("select " +
             "count(*) " +
             "from Employee " +
-            "WHERE salary > cast(:#{#bottomEdge} as bigdecimal) and salary < cast(:#{#topEdge} as bigdecimal)")
-    Long countEmployeeSalaryBetweenQuery(@Param("bottomEdge") double bottomEdge, @Param("topEdge") double topEdge);
+            "WHERE salary > cast(:bottomEdge as bigdecimal) and salary < cast(:topEdge as bigdecimal)")
+    Long countEmployeeSalaryBetweenQuery(double bottomEdge, double topEdge);
     // ----------------------------------
 }
