@@ -6,7 +6,6 @@ import org.hibernate.dialect.DatabaseVersion;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.dialect.PostgreSQLDriverKind;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolutionInfo;
-import org.hibernate.query.spi.QueryEngine;
 
 public class BetterPGDialect extends PostgreSQLDialect {
     public BetterPGDialect() {

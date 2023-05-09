@@ -11,7 +11,7 @@ insert into Employee (id, name, salary, surname) values (gen_random_uuid(), 'Gav
 -- Function that returns second max salary of Employee table
 create or replace function second_max_salary() returns numeric as $$ select max(salary) from Employee where salary <> (select max(salary) from Employee) $$ language SQL;
 
--- Aggregate function that returns number of rows greater than 200
+-- Aggregate function that returns number of rows greater than value
 create or replace function greater_than(c bigint, val numeric, gr_val numeric) returns bigint as $$ begin return case when val > gr_val then (c + 1)::bigint else c::bigint end; end; $$ language "plpgsql";
 create or replace function agg_final(c bigint) returns bigint as $$ begin return c; end; $$ language "plpgsql";
-create or replace aggregate countItemsGreaterVal(numeric, numeric) (sfunc = greater_than(bigint, numeric, numeric), stype = bigint, finalfunc = agg_final, initcond = 0);
+create or replace aggregate countItemsGreaterVal(numeric, numeric) (sfunc = greater_than, stype = bigint, finalfunc = agg_final, initcond = 0);
